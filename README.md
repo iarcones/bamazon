@@ -27,7 +27,6 @@ Simulate a general store, with all kind of departments and with 3 diferents APP 
 ## Functionality
 
 ### Challenge #1: Customer View
-https://youtu.be/6RRY5DHhG30
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/6RRY5DHhG30/0.jpg)](http://www.youtube.com/watch?v=6RRY5DHhG30)
 
@@ -47,7 +46,8 @@ The app includes validations as product sold out, product ever more exist, etc.
 
 ### Challenge #2: Manager View 
 
-[![Alt text](https://youtu.be/NEizBw_hUTc)](https://www.youtube.com/watch?v=VID)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/NEizBw_hUTc/0.jpg)](http://www.youtube.com/watch?v=NEizBw_hUTc)
+
 
 A Node application called **bamazonManager.js**. Running this application will:
 
@@ -65,7 +65,7 @@ A Node application called **bamazonManager.js**. Running this application will:
 
 ### Challenge #3: Supervisor View 
 
-[![Alt text](https://youtu.be/uQKCAH_lDNg)](https://www.youtube.com/watch?v=VID)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/uQKCAH_lDNg/0.jpg)](http://www.youtube.com/watch?v=uQKCAH_lDNg)
 
 Another Node app called **bamazonSupervisor.js**. 
 
