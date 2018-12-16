@@ -119,7 +119,7 @@ function displayDepartments() {
                 res[i].sales = 0;
             }
 
-            var total_profit = res[i].sales - res[i].costs;
+            var total_profit = parseFloat(res[i].sales - res[i].costs);
 
             table.push([
                 res[i].id,

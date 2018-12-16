@@ -40,7 +40,7 @@ function startPrompt() {
                 name: "productID",
                 validate: function validateProductID(name) {
                     if (name === "Q") { end() }
-                    else if (parseInt(name) > parseInt(lastID) || !parseInt(name, 10)) {
+                    else if (!parseInt(name, 10)) {
                         console.log("\nPlease introduce a valid id".red.bold);
                     }
                     else {
@@ -80,11 +80,15 @@ function customerOrder(resInput) {
     query = "SELECT * FROM products where item_id =" + resInput.productID;
 
     connection.query(query, function (error, resQuery) {
+
         if (error) throw error;
 
-        if (resQuery.stock_quantity < resInput.quantity) {
-            console.log("Insufficient quantity!".red + "we have: ".red + resQuery.stock_quantity.red);
-            askLessQuatity(resInput.productID);
+        if (resQuery[0].stock_quantity < resInput.quantity) {
+            console.log("Sorry insufficient number of items! ".red.bold + "we have: ".red.bold + (resQuery[0].stock_quantity) + " " + resQuery[0].product_name + "\n");
+
+            startPrompt()
+
+            // askLessQuatity(resInput[0].productID);
         }
         else {
             processOrder(resInput, [resQuery]);
@@ -97,7 +101,7 @@ function customerOrder(resInput) {
 function queryAllProducts() {
     connection.query("SELECT * FROM products", function (error, res) {
         if (error) throw error;
-        console.log(res);
+        
         var table = new Table({
             head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold]
             , colWidths: [10, 50, 30, 10]
