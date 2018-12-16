@@ -1,133 +1,90 @@
-## Instructions
+# Store-node-app
+Simulate a general store, with all kind of departments and with 3 diferents APP based on the role of the user (Customer, Store Manager, Business Supervisor)
 
-# Challenge #1: Customer View
+## Getting Started
 
-- Create a MySQL Database called bamazon.
-- Then create a Table inside of that database called products.
-The products table should have each of the following columns:
+#### These instructions will get you a copy of the project up and running on your local machine.
 
-    - item_id (unique id for each product)
-    - product_name (Name of product)
-    - department_name
-    - price (cost to customer)
-    - stock_quantity (how much of the product is available in stores)
+1. Clone the repository
+2. Run nmp install 
 
+#### Go to npmjs if you want to know more about:
 
-Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
-
-Then create a Node application called bamazonCustomer.js. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
-The app should then prompt users with two messages.
+1. **mysql**: https://www.npmjs.com/package/mysql
+2. **cli-table**: https://www.npmjs.com/package/cli-table
+3. **inquirer**: https://www.npmjs.com/package/inquirer
+4. **colors**: https://www.npmjs.com/package/colors
 
 
+## Built With
 
-The first should ask them the ID of the product they would like to buy.
-The second message should ask how many units of the product they would like to buy.
+- Html
+- Nodejs
+- Javascript
+- MySql
+- Npmjs packages: **mysql** mysql database access, **cli-table** draw tables, **inquirer** handle prompts, **colors** color, backgrounds.
+
+## Functionality
+
+### Challenge #1: Customer View
+
+[![Alt text](https://youtu.be/6RRY5DHhG30)](https://www.youtube.com/watch?v=VID)
+
+Node application called **bamazonCustomer.js**. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
+The app will then prompt users with two messages.
+
+- The first asks the customers the ID of the product they would like to buy.
+- The second message asks how many units of the product they would like to buy.
+
+Once the customer has placed the order, the application  check if the store has enough of the product to meet the customer's request.
+If not, the app log a phrase like Insufficient quantity!, and then prevent the order from going through.
+However, if the store haves enough of the product, the order is proccesed.
+
+The app includes validations as product sold out, product ever more exist, etc.
 
 
+### Challenge #2: Manager View 
 
-Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
+[![Alt text](https://youtu.be/NEizBw_hUTc)](https://www.youtube.com/watch?v=VID)
 
-
-
-If not, the app should log a phrase like Insufficient quantity!, and then prevent the order from going through.
-
-
-
-However, if your store does have enough of the product, you should fulfill the customer's order.
-
-
-This means updating the SQL database to reflect the remaining quantity.
-Once the update goes through, show the customer the total cost of their purchase.
-
-
-# Challenge #2: Manager View (Next Level)
-
-Create a new Node application called bamazonManager.js. Running this application will:
-
+A Node application called **bamazonManager.js**. Running this application will:
 
 - List a set of menu options:
-- View Products for Sale
-- View Low Inventory
-- Add to Inventory
-- Add New Product
-- If a manager selects View Products for Sale, the app should list every available item: the item IDs, names, prices, and quantities.
-- If a manager selects View Low Inventory, then it should list all items with an inventory count lower than five.
-- If a manager selects Add to Inventory, your app should display a prompt that will let the manager "add more" of any item currently in the store.
-- If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
+    - View Products for Sale
+    - View Low Inventory
+    - Add to Inventory
+    - Add New Product
+- Actions:
+    - If a manager selects View Products for Sale, the app lists every available item: the item IDs, names, prices, and quantities.
+    - If a manager selects View Low Inventory, then it will list all items with an inventory count lower than five.
+    - If a manager selects Add to Inventory, the app display a prompt that will let the manager "add more" of any item currently in the store.
+    - If a manager selects Add New Product, it allows the manager to add a completely new product to the store.
 
 
-# Challenge #3: Supervisor View (Final Level)
+### Challenge #3: Supervisor View 
 
-Create a new MySQL table called departments. Your table should include the following columns:
+[![Alt text](https://youtu.be/uQKCAH_lDNg)](https://www.youtube.com/watch?v=VID)
 
+Another Node app called **bamazonSupervisor.js**. 
 
+- This application will list a set of menu options:
 
-department_id
-department_name
-over_head_costs (A dummy number you set for each department)
+    - View Product Sales by Department
+    - Create New Department
 
+- Actions:
 
+    - When a supervisor selects View Product Sales by Department, the app will display a summarized table including: department_id, department_name, over_head_costs, product_sales, total_profit.
+    The total_profit column will be calculated on the fly using the difference between over_head_costs and product_sales. The first app bamazonSupervisor.js has been modified to keep track of the product_sales.
+     - If the supervisor selects Create New Department, the app allows  to add a completely new department to the store.
 
-Modify the products table so that there's a product_sales column, and modify your bamazonCustomer.js app so that when a customer purchases anything from the store, the price of the product multiplied by the quantity purchased is added to the product's product_sales column.
+  
 
+## Author
 
+Isabel Arcones: https://github.com/iarcones
 
-Make sure your app still updates the inventory listed in the products column.
-
-
-
-Create another Node app called bamazonSupervisor.js. Running this application will list a set of menu options:
-
-
-
-View Product Sales by Department
-Create New Department
-
-
-
-When a supervisor selects View Product Sales by Department, the app should display a summarized table in their terminal/bash window. Use the table below as a guide.
-
-
-
-
-
-department_id
-department_name
-over_head_costs
-product_sales
-total_profit
-
-
-
-
-01
-Electronics
-10000
-20000
-10000
-
-
-02
-Clothing
-60000
-100000
-40000
-
-
-
-
-
-The total_profit column should be calculated on the fly using the difference between over_head_costs and product_sales. total_profit should not be stored in any database. You should use a custom alias.
-If you can't get the table to display properly after a few hours, then feel free to go back and just add total_profit to the departments table.
-
-
-
-Hint: You may need to look into aliases in MySQL.
-Hint: You may need to look into GROUP BYs.
-Hint: You may need to look into JOINS.
-HINT: There may be an NPM package that can log the table to the console. What's is it? Good question :)
-
-
+Here I will be updating some samples of my projects: https://iarcones.github.io/Porfolio/
 
 
 

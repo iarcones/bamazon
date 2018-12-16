@@ -223,7 +223,7 @@ function updateStock(resInput) {
 ////// "Add New Product" /////
 
 function addNewProduct() {
-    connection.query("SELECT department_name FROM products group by department_name", function (error, res) {
+    connection.query("SELECT department_name FROM departments group by department_name", function (error, res) {
 
         if (error) throw error;
 

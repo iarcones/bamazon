@@ -149,7 +149,7 @@ function processOrder(resInput, [resQuery]) {
             ], function (error, res) {
                 if (error) throw error;
 
-                var display = "\nThanks for your order of " + resQuery[0].product_name + ", the total cost was: " + resQuery[0].price * resInput.quantity + "\n";
+                var display = "\nThanks for your order of " + resQuery[0].product_name + ", the total cost was: " + (resQuery[0].price * resInput.quantity).toFixed(2) + "\n";
 
                 console.log(display.green.bold);
 
