@@ -27,8 +27,10 @@ Simulate a general store, with all kind of departments and with 3 diferents APP 
 ## Functionality
 
 ### Challenge #1: Customer View
+https://youtu.be/6RRY5DHhG30
 
-[![Alt text](https://youtu.be/6RRY5DHhG30)](https://www.youtube.com/watch?v=VID)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/6RRY5DHhG30/0.jpg)](http://www.youtube.com/watch?v=6RRY5DHhG30)
+
 
 Node application called **bamazonCustomer.js**. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 The app will then prompt users with two messages.
