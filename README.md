@@ -65,7 +65,7 @@ A Node application called **bamazonManager.js**. Running this application will:
 
 ### Challenge #3: Supervisor View 
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/uQKCAH_lDNg/3.jpg)](http://www.youtube.com/watch?v=uQKCAH_lDNg)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/uQKCAH_lDNg/0.jpg)](http://www.youtube.com/watch?v=uQKCAH_lDNg)
 
 Another Node app called **bamazonSupervisor.js**. 
 
