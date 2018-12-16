@@ -20,9 +20,9 @@ var connection = mysql.createConnection({
 connection.connect(function (error) {
     if (error) throw error;
     // console.log("connected as id " + connection.threadId);
-    console.log("\n*************".magenta)
-    console.log("\nBamazon Store".magenta.bold)
-    console.log("\n*************\n".magenta)
+    console.log("\n****************************".magenta)
+    console.log("\nBamazon Store -  Manager APP".magenta.bold)
+    console.log("\n****************************\n".magenta)
     startPrompt();
 });
 

@@ -29,7 +29,6 @@ connection.connect(function (error) {
 
 
 var itemsArray = [];
-var lastID = 0;
 
 function startPrompt() {
 
@@ -98,7 +97,7 @@ function customerOrder(resInput) {
 function queryAllProducts() {
     connection.query("SELECT * FROM products", function (error, res) {
         if (error) throw error;
-
+        console.log(res);
         var table = new Table({
             head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold]
             , colWidths: [10, 50, 30, 10]
@@ -110,8 +109,6 @@ function queryAllProducts() {
             );
         }
 
-        lastID = res[i - 1].item_id;
-
         console.log(table.toString());
         startPrompt()
 
@@ -122,12 +119,17 @@ function queryAllProducts() {
 function processOrder(resInput, [resQuery]) {
 
     var newStock = parseInt(resQuery[0].stock_quantity) - parseInt(resInput.quantity);
+    var newTotal = parseFloat(resQuery[0].product_sales) + (parseInt(resInput.quantity) * parseFloat(resQuery[0].price));
+    console.log(newStock + " | " + newTotal);
 
     var query =
-        connection.query("UPDATE products SET ? WHERE ?",
+        connection.query("UPDATE products SET ?, ? WHERE ?",
             [
                 {
                     stock_quantity: newStock,
+                },
+                {
+                    product_sales: newTotal,
                 },
                 {
                     item_id: resInput.productID
