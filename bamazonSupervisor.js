@@ -125,8 +125,8 @@ function displayDepartments() {
                 res[i].id,
                 res[i].name,
                 res[i].costs,
-                res[i].sales,
-                total_profit
+                res[i].sales.toFixed(2),
+                total_profit.toFixed(2)
             ]);
         }
 

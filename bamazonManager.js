@@ -79,33 +79,31 @@ function displayAll(option) {
 
         if (error) throw error;
 
+        var table = new Table({
+            head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold, "Stock".cyan.bold]
+            , colWidths: [10, 50, 30, 10, 10]
+        });
+        for (var i = 0; i < res.length; i++) {
+        
+            table.push(
+                [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price.toFixed(2), res[i].stock_quantity]
+            );
+        }
+        console.log(table.toString());
+        console.log("\n");
+
         switch (option) {
 
             case "1": //// Display all items
-                var table = new Table({
-                    head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold, "Stock".cyan.bold]
-                    , colWidths: [10, 50, 30, 10, 10]
-                });
-                for (var i = 0; i < res.length; i++) {
-
-                    table.push(
-                        [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
-                    );
-                }
-                console.log(table.toString());
-                console.log("\n");
-
                 startPrompt();
                 break;
 
             case "2": //// add to Invetory
 
-                addToInventory(res);
+                promptAddStock();
                 break;
 
         }
-
-
     });
 }
 
@@ -115,6 +113,12 @@ function lowInventory() {
 
     connection.query("SELECT * FROM products where stock_quantity < 5", function (error, res) {
         if (error) throw error;
+
+        if (res.length === 0) {
+            console.log("We didn't find any product low of stock ".red.bold + "\n");
+            startPrompt();
+            return;
+        }
 
         var table = new Table({
             head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold, "Stock".cyan.bold]
@@ -133,27 +137,6 @@ function lowInventory() {
 
     });
 }
-
-//// "Add to Inventory" /////
-
-function addToInventory(res) {
-
-    var table = new Table({
-        head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold, "Stock".cyan.bold]
-        , colWidths: [10, 50, 30, 10, 10]
-    });
-    for (var i = 0; i < res.length; i++) {
-
-        table.push(
-            [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
-        );
-
-    }
-
-    console.log(table.toString());
-    promptAddStock();
-
-};
 
 function promptAddStock() {
 
@@ -201,6 +184,12 @@ function updateStock(resInput) {
 
     connection.query(query, function (error, resQuery) {
         if (error) throw error;
+
+        if (resQuery.length === 0) {
+            console.log("Invalid id, we don't have this product ".red.bold + "\n");
+            startPrompt();
+            return;
+        }
 
         var newStock = parseInt(resQuery[0].stock_quantity) + parseInt(resInput.quantity);
 

@@ -118,7 +118,7 @@ function queryAllProducts() {
             if (res[i].stock_quantity > 0){
             itemsArray.push(res[i].res);
             table.push(
-                [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price]
+                [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price.toFixed(2)]
             );
             }
         }
