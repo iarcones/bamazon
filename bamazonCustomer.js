@@ -80,15 +80,23 @@ function customerOrder(resInput) {
     query = "SELECT * FROM products where item_id =" + resInput.productID;
 
     connection.query(query, function (error, resQuery) {
-
         if (error) throw error;
 
+        if (resQuery.length === 0) {
+            console.log("Invalid id, we don't have this product ".red.bold + "\n");
+            startPrompt();
+            return;
+        }
+
+        if (resQuery[0].stock_quantity === 0){
+            console.log("Sorry this product is sold out".red.bold + "\n");
+            startPrompt();
+            return;
+        }
         if (resQuery[0].stock_quantity < resInput.quantity) {
             console.log("Sorry insufficient number of items! ".red.bold + "we have: ".red.bold + (resQuery[0].stock_quantity) + " " + resQuery[0].product_name + "\n");
 
             startPrompt()
-
-            // askLessQuatity(resInput[0].productID);
         }
         else {
             processOrder(resInput, [resQuery]);
@@ -107,10 +115,12 @@ function queryAllProducts() {
             , colWidths: [10, 50, 30, 10]
         });
         for (var i = 0; i < res.length; i++) {
+            if (res[i].stock_quantity > 0){
             itemsArray.push(res[i].res);
             table.push(
                 [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price]
             );
+            }
         }
 
         console.log(table.toString());
@@ -119,12 +129,10 @@ function queryAllProducts() {
     });
 }
 
-
 function processOrder(resInput, [resQuery]) {
 
     var newStock = parseInt(resQuery[0].stock_quantity) - parseInt(resInput.quantity);
     var newTotal = parseFloat(resQuery[0].product_sales) + (parseInt(resInput.quantity) * parseFloat(resQuery[0].price));
-    console.log(newStock + " | " + newTotal);
 
     var query =
         connection.query("UPDATE products SET ?, ? WHERE ?",
