@@ -18,10 +18,12 @@ var connection = mysql.createConnection({
     database: "bamazonDB"
 });
 
-connection.connect(function (err) {
-    if (err) throw err;
+connection.connect(function (error) {
+    if (error) throw error;
     // console.log("connected as id " + connection.threadId);
-
+    console.log("\n*************".magenta)
+    console.log("\nBamazon Store".magenta.bold)
+    console.log("\n*************\n".magenta)
     queryAllProducts();
 });
 
@@ -37,9 +39,9 @@ function startPrompt() {
                 type: 'input',
                 message: "What is the ID of the product you would like to purchase? [Quit with Q]".blue.bold,
                 name: "productID",
-                validate: function validateProductID(name){
-                    if (name === "Q") {end()}
-                    else if (parseInt(name) > parseInt(lastID) || !parseInt(name, 10)){
+                validate: function validateProductID(name) {
+                    if (name === "Q") { end() }
+                    else if (parseInt(name) > parseInt(lastID) || !parseInt(name, 10)) {
                         console.log("\nPlease introduce a valid id".red.bold);
                     }
                     else {
@@ -51,9 +53,9 @@ function startPrompt() {
                 type: 'input',
                 message: "How many would you like? [Quit with Q]".blue.bold,
                 name: "quantity",
-                validate: function validateQ(name){
-                    if (name === "Q") {end()}
-                    else if (!parseInt(name, 10)){
+                validate: function validateQ(name) {
+                    if (name === "Q") { end() }
+                    else if (!parseInt(name, 10)) {
                         console.log("\nPlease introduce a valid quantity".red.bold);
                     }
                     else {
@@ -64,8 +66,8 @@ function startPrompt() {
         ])
         .then(function (resInput) {
 
-            if (resInput.productID === "Q" || resInput.quantity === "Q")  {
-                end();  
+            if (resInput.productID === "Q" || resInput.quantity === "Q") {
+                end();
             }
             else {
                 customerOrder(resInput);
@@ -74,14 +76,14 @@ function startPrompt() {
 }
 
 
-function customerOrder(resInput){
+function customerOrder(resInput) {
 
     query = "SELECT * FROM products where item_id =" + resInput.productID;
 
-    connection.query(query, function (err, resQuery) {
-        if (err) throw err;
+    connection.query(query, function (error, resQuery) {
+        if (error) throw error;
 
-        if (resQuery.stock_quantity < resInput.quantity){
+        if (resQuery.stock_quantity < resInput.quantity) {
             console.log("Insufficient quantity!".red + "we have: ".red + resQuery.stock_quantity.red);
             askLessQuatity(resInput.productID);
         }
@@ -92,61 +94,59 @@ function customerOrder(resInput){
     });
 
 }
+
 function queryAllProducts() {
-    connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err;
-        printResults(res);
-
-    });
-}
-
-function printResults(res) {
-
-    var table = new Table({
-        head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold]
-        , colWidths: [10, 50, 30, 10]
-    });
-    for (var i = 0; i < res.length; i++) {
-        itemsArray.push(res[i].res);
-        table.push(
-            [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price]
-        );
-    }
-
-    lastID = res[i-1].item_id;
-
-    console.log(table.toString());
-    startPrompt()
-}
-
-function processOrder(resInput, [resQuery]){
- 
-    newStock = parseInt(resQuery[0].stock_quantity) - parseInt(resInput.quantity);
-
-    var query = 
-    connection.query("UPDATE products SET ? WHERE ?",   
-    [  
-        {
-            stock_quantity: newStock,
-        },
-        {
-            item_id: resInput.productID
-        }
-    ], function (error, res) {
+    connection.query("SELECT * FROM products", function (error, res) {
         if (error) throw error;
 
-        var display = "Thanks for your order of " + resQuery[0].product_name + ", the total cost was: " + resQuery[0].price * resInput.quantity;
+        var table = new Table({
+            head: ['itemId'.cyan.bold, 'Product'.cyan.bold, 'Department'.cyan.bold, 'Price'.cyan.bold]
+            , colWidths: [10, 50, 30, 10]
+        });
+        for (var i = 0; i < res.length; i++) {
+            itemsArray.push(res[i].res);
+            table.push(
+                [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price]
+            );
+        }
 
-        console.log(display.blue.bold);
+        lastID = res[i - 1].item_id;
 
-        end();
+        console.log(table.toString());
+        startPrompt()
 
-      });
-
-     
+    });
 }
 
-function end(){
+
+function processOrder(resInput, [resQuery]) {
+
+    var newStock = parseInt(resQuery[0].stock_quantity) - parseInt(resInput.quantity);
+
+    var query =
+        connection.query("UPDATE products SET ? WHERE ?",
+            [
+                {
+                    stock_quantity: newStock,
+                },
+                {
+                    item_id: resInput.productID
+                }
+            ], function (error, res) {
+                if (error) throw error;
+
+                var display = "\nThanks for your order of " + resQuery[0].product_name + ", the total cost was: " + resQuery[0].price * resInput.quantity + "\n";
+
+                console.log(display.green.bold);
+
+                startPrompt();
+
+            });
+
+
+}
+
+function end() {
     console.log("\n____________________________________________\n")
     console.log("Thanks for visiting, hope you come back soon".green.bold + "\n");
     connection.end();
