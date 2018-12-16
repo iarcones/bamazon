@@ -97,8 +97,6 @@ function displayDepartments() {
 
     query = "SELECT max(deppro.department_id) as id,deppro.department_name as name, max(deppro.over_head_costs) as costs, sum(deppro.product_sales) as sales from (SELECT departments.department_id, departments.department_name,departments.over_head_costs, pro.product_sales FROM bamazonDB.departments LEFT JOIN bamazonDB.products as pro using(department_name)) as deppro group by deppro.department_name";
 
-
-
     connection.query(query, function (error, res) {
         if (error) throw error;
 
@@ -117,12 +115,12 @@ function displayDepartments() {
 
             itemsArray.push(res[i]);
 
-            if (!parseFloat(res[i].sales , 10)){
+            if (!parseFloat(res[i].sales, 10)) {
                 res[i].sales = 0;
             }
 
             var total_profit = res[i].sales - res[i].costs;
-            
+
             table.push([
                 res[i].id,
                 res[i].name,
