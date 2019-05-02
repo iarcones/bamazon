@@ -16,27 +16,28 @@ CREATE TABLE products
     (10,2) NULL,
     stock_quantity INTEGER
     (10) NULL,
-    product_sales
+    product_sales DECIMAL
+    (10,2) NULL,
     PRIMARY KEY
     (item_id)
 );
 
 
     INSERT INTO products
-        (product_name, department_name, price, stock_quantity)
+        (product_name, department_name, price, stock_quantity, product_sales)
     VALUES
-        ("Kapok Zafu Meditation Cushion, Black", "Health & Fitness", 49.95, 15);
+        ("Kapok Zafu Meditation Cushion, Black", "Health & Fitness", 49.95, 15, 0);
 
     INSERT INTO products
-        (product_name, department_name, price, stock_quantity)
+        (product_name, department_name, price, stock_quantity, product_sales)
     VALUES
-        ("Womens Fingerless Gloves", "Clothing", 12.99, 20);
+        ("Womens Fingerless Gloves", "Clothing", 12.99, 20, 0);
 
 
     INSERT INTO products
-        (product_name, department_name, price, stock_quantity)
+        (product_name, department_name, price, stock_quantity, product_sales)
     VALUES
-        ("NIKE Women's in-Season Trainer 7 Cross", "Health & Fitness", 52.99, 30);
+        ("NIKE Women's in-Season Trainer 7 Cross", "Health & Fitness", 52.99, 30, 0);
 
     SELECT *
     FROM products;
@@ -56,16 +57,16 @@ CREATE TABLE products
 );
 
         INSERT INTO departments
-            (department_name, price, over_head_costs)
+            (department_name, over_head_costs)
         VALUES
             ("Health & Fitness", 200);
 
         INSERT INTO departments
-            (department_name, price, over_head_costs)
+            (department_name, over_head_costs)
         VALUES
             ("Clothing", 150);
         INSERT INTO departments
-            (department_name, price, over_head_costs)
+            (department_name, over_head_costs)
         VALUES
             ("Food", 100);
 
